@@ -1,5 +1,5 @@
 import pytest
-from lib.Utils import get_spark_session
+from src.main.Utils import get_spark_session
 
 @pytest.fixture(scope='session')
 def spark():

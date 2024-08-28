@@ -1,6 +1,6 @@
 import sys
-from lib import Utils
-from lib.logger import Log4j
+from src.main import Utils
+from src.main.logger import Log4j
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
