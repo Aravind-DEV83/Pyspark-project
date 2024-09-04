@@ -9,4 +9,4 @@ metastore_db/
 
 # credentials
 key.json
-dataProcessingCode/src/main/lib/
+lib/
