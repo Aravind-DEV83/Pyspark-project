@@ -10,3 +10,4 @@ metastore_db/
 # credentials
 key.json
 lib/
+.DS_Store

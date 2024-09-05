@@ -1,27 +1,52 @@
+from typing import Optional, Sequence, Dict, Any
 import logging
-import transformations
+import argparse
+
 from pyspark.sql import SparkSession, DataFrame
+from transformations import convert_to_timestamp, total_ride_time, average_speed,estimated_ride_time
+
+import util.constants as constants
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
 
 # Variables
-INPUT_LOCATION='gs://input-source-adev-spark/uber_5.csv'
-GCS_SPARK_CONNECTOR_LIB = 'gs://spark-lib-adev-spark/bigquery/gcs-connector-hadoop3-latest.jar'
-PROJECT_ID = 'adev-spark'
-DATASET = 'temp'
-TABLE_NAME = 'trip_data'
-TEMPROARY_GCS_BUCKET = 'temp_gcs_adev-spark'
+GCS_SPARK_CONNECTOR_LIB = "gs://spark-lib-adev-spark/gcs/gcs-connector-hadoop3-latest.jar"
 SERVICE_ACCOUNT = '/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/key.json'
 
+def parse_args(args: Optional[Sequence[str]] = None) -> Dict[str, Any]:
+    parser = argparse.ArgumentParser()
 
-def create_spark_session() -> SparkSession:
+    parser.add_argument(
+        f'--{constants.GCS_INPUT_LOCATION}',
+        required=True
+    )
+    parser.add_argument(
+        f'--{constants.PROJECT_ID}',
+        required=True
+    )
+    parser.add_argument(
+        f'--{constants.GCS_BQ_OUTPUT_TABLE}',
+        required=True
+    )
+    parser.add_argument(
+        f'--{constants.GCS_BQ_TEMP_BUKCET}',
+        required=True
+    )
+
+    known_args: argparse.Namespace
+    known_args, _ = parser.parse_known_args(args)
+
+    return vars(known_args)
+
+
+def create_spark_session(bq_temp_bucket: str) -> SparkSession:
 
     spark = SparkSession.builder. \
                     appName("GCS to BQ Pipeline"). \
                     config("google.cloud.auth.service.account.enable", "true"). \
                     config("google.cloud.auth.service.account.json.keyfile", SERVICE_ACCOUNT). \
-                    config("temporaryGcsBucket", TEMPROARY_GCS_BUCKET). \
+                    config("temporaryGcsBucket", bq_temp_bucket). \
                     config("spark.hadoop.fs.AbstractFileSystem.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"). \
                     config("spark.hadoop.fs.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem"). \
                     config("spark.jars", "/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/lib/gcs-connector-hadoop3-latest.jar"). \
@@ -31,7 +56,7 @@ def create_spark_session() -> SparkSession:
     logging.info("Spark Session Initiated sucessfully")
     return spark
 
-def data_load(spark: SparkSession) -> DataFrame:
+def data_load(spark: SparkSession, path: str) -> DataFrame:
     """Load Data from GCS
 
     :param spark - Spark Session Object
@@ -41,11 +66,11 @@ def data_load(spark: SparkSession) -> DataFrame:
             format("csv"). \
             option("header", "true"). \
             option("inferSchema", "true"). \
-            load(INPUT_LOCATION)
+            load(path)
 
     return input_df
 
-def data_write(output_df: DataFrame):
+def data_write(output_df: DataFrame, project_id: str, bq_output_table: str):
     """"Write Data to BigQuery
 
     Keyword arguments:
@@ -54,7 +79,7 @@ def data_write(output_df: DataFrame):
     """
 
     output_df.write.format("bigquery"). \
-            option("table",f'{PROJECT_ID}.{DATASET}.{TABLE_NAME}'). \
+            option("table",f'{project_id}.{bq_output_table}'). \
             mode("overwrite"). \
             save()
     logging.info("Sucesfully upated data to BQ.")
@@ -65,19 +90,24 @@ def main():
     :return: None
     """
 
-    spark = create_spark_session()
+    #Arguments
+    args = parse_args()
+    input_location: str = args[constants.GCS_INPUT_LOCATION]
+    project_id: str = args[constants.PROJECT_ID]
+    bq_output_table: str = args[constants.GCS_BQ_OUTPUT_TABLE]
+    bq_temp_bucket: str = args[constants.GCS_BQ_TEMP_BUKCET]
 
-    input_df = data_load(spark)
-    input_df.show(5)
+    spark = create_spark_session(bq_temp_bucket)
+    input_df = data_load(spark, input_location)
 
     logging.info("transformations -- IN ")
-    converted_df = transformations.convert_to_timestamp(input_df)
+    converted_df = convert_to_timestamp(input_df)
 
-    ride_time_df = transformations.total_ride_time(converted_df)
+    ride_time_df = total_ride_time(converted_df)
 
-    estimated_ride_time_df = transformations.estimated_ride_time(ride_time_df)
+    estimated_ride_time_df = estimated_ride_time(ride_time_df)
 
-    average_speed_df = transformations.average_speed(estimated_ride_time_df)
+    average_speed_df = average_speed(estimated_ride_time_df)
 
     average_speed_df. \
             select(
@@ -86,7 +116,8 @@ def main():
             show()
     logging.info("transformations -- OUT")
 
-    data_write(average_speed_df)
+    data_write(average_speed_df, project_id, bq_output_table)
+
     spark.stop()
     logging.info("Job finshed")
 
