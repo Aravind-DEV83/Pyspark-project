@@ -9,5 +9,5 @@ metastore_db/
 
 # credentials
 key.json
-lib/
+source/dataProcessingCode/src/main/lib/
 .DS_Store

@@ -5,14 +5,10 @@ import argparse
 from pyspark.sql import SparkSession, DataFrame
 from transformations import convert_to_timestamp, total_ride_time, average_speed,estimated_ride_time
 
-import util.constants as constants
+import constants as constants
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
-
-# Variables
-GCS_SPARK_CONNECTOR_LIB = "gs://spark-lib-adev-spark/gcs/gcs-connector-hadoop3-latest.jar"
-SERVICE_ACCOUNT = '/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/key.json'
 
 def parse_args(args: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser = argparse.ArgumentParser()
@@ -44,13 +40,9 @@ def create_spark_session(bq_temp_bucket: str) -> SparkSession:
 
     spark = SparkSession.builder. \
                     appName("GCS to BQ Pipeline"). \
-                    config("google.cloud.auth.service.account.enable", "true"). \
-                    config("google.cloud.auth.service.account.json.keyfile", SERVICE_ACCOUNT). \
                     config("temporaryGcsBucket", bq_temp_bucket). \
                     config("spark.hadoop.fs.AbstractFileSystem.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS"). \
                     config("spark.hadoop.fs.gs.impl", "com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem"). \
-                    config("spark.jars", "/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/lib/gcs-connector-hadoop3-latest.jar"). \
-                    config("spark.jars.packages", "com.google.cloud.spark:spark-bigquery-with-dependencies_2.12:0.40.0"). \
                     getOrCreate()
 
     logging.info("Spark Session Initiated sucessfully")
