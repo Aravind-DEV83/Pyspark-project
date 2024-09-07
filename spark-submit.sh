@@ -1,8 +1,3 @@
-spark-submit --master yarn --deploy-mode cluster \
---py-files pysbdl_lib.zip \
---files conf/pysbdl.conf,conf/spark.conf,log4j.properties \
-main.py qa 2022-08-02
-
 gcloud dataproc jobs submit pyspark gs://pyspark-files-adev-spark/gcs_to_bq/job.py \
     --cluster cluster-5904 \
     --region us-central1 \

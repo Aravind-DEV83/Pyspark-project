@@ -31,7 +31,7 @@ def total_ride_time(input_df: DataFrame) -> DataFrame:
     ride_time_df = input_df. \
                     withColumn("total_ride_time", when(
                         col("tpep_pickup_datetime") != col("tpep_dropoff_datetime"), 
-                        round(col("tpep_dropoff_datetime").cast("long") - col("tpep_pickup_datetime").cast("long"))
+                        round(col("tpep_dropoff_datetime").cast("long") - col("tpep_pickup_datetime").cast("double"))
                     ).otherwise(0)
                     )
     return ride_time_df
