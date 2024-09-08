@@ -6,6 +6,7 @@ __pycache__
 .vscode/
 dist
 metastore_db/
+.pytest_cache
 
 # credentials
 key.json

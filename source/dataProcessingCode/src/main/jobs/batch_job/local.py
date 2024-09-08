@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
 
 # Variables
-SERVICE_ACCOUNT = '/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/jobs/key.json'
+SERVICE_ACCOUNT = '/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/jobs/batch_job/key.json'
 
 def parse_args(args: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser = argparse.ArgumentParser()
