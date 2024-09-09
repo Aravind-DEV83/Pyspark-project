@@ -1,0 +1,19 @@
+name: Second Sample Worflow
+on: workflow_dispatch
+jobs:
+  checkout_repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with: 
+          ref: feature/PYSBDL-1
+      - name: Install NodeJs
+        uses: actions/setup-node@v4
+        with: 
+          node-version: 20
+      - name: Install dependencies
+        run: pipenv install -all
+      - name: Run Tests
+        run: python source/dataProcessingCode/src/tests/unit/test_job.py
+      

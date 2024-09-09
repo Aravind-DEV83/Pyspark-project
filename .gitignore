@@ -6,8 +6,9 @@ __pycache__
 .vscode/
 dist
 metastore_db/
+.pytest_cache
 
 # credentials
 key.json
-lib/
+source/dataProcessingCode/src/main/lib/
 .DS_Store
