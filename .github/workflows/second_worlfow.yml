@@ -1,8 +1,8 @@
-name: "Second Sample Worflow"
-on: worflow_dispatch
+name: Second Sample Worflow
+on: workflow_dispatch
 jobs:
   checkout_repo:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
       steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
