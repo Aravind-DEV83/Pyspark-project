@@ -12,6 +12,8 @@ jobs:
         uses: actions/setup-node@v4
         with: 
           node-version: 20
+      - name: Install PipEnv
+        run: pip install pipenv --user
       - name: Install dependencies
         run: pipenv install -all
       - name: Run Tests
