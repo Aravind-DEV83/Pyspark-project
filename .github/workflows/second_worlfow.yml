@@ -15,7 +15,7 @@ jobs:
       - name: Install PipEnv
         run: pip install pipenv --user
       - name: Install dependencies
-        run: pipenv install -all
+        run: pipenv install
       - name: Run Tests
         run: python source/dataProcessingCode/src/tests/unit/test_job.py
       
