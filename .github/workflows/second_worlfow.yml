@@ -8,14 +8,15 @@ jobs:
         uses: actions/checkout@v4
         with: 
           ref: feature/PYSBDL-1
-      - name: Install NodeJs
-        uses: actions/setup-node@v4
+      - name: Install Python 3.9.7
+        uses: actions/setup-python@v5
         with: 
-          node-version: 20
-      - name: Install PipEnv
-        run: pip install pipenv --user
-      - name: Install dependencies
-        run: pipenv install
-      - name: Run Tests
+          python-version: 3.9.7
+      - name: Install dependencies with Pipenv
+        run: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+          pipenv install --deploy --ignore-pipfile
+      - name: Run Unit Test
         run: python source/dataProcessingCode/src/tests/unit/test_job.py
       
