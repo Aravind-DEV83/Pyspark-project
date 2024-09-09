@@ -19,4 +19,10 @@ jobs:
           pipenv install --deploy --ignore-pipfile
       - name: Run Unit Test
         run: python source/dataProcessingCode/src/tests/unit/test_job.py
+
+  sample: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get metadata
+        run: echo "${{ toJSON(github) }}"
       
