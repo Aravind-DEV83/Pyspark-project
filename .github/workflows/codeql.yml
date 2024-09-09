@@ -1,0 +1,11 @@
+name: CodeQL Analysis
+on: workflow_dispatch
+jobs:
+  analyze:
+    name: Analyze ${{ matrix.language }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Print Metadata
+        run: echo "${{ matrix.language }}"
