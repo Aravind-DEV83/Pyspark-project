@@ -3,7 +3,7 @@ on: worflow_dispatch
 jobs:
   checkout_repo:
     runs_on: ubuntu-latest
-      steps: 
+      steps:
         - name: Checkout Repository
           uses: actions/checkout@v4
           with: 
