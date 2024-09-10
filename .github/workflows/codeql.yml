@@ -1,11 +1,21 @@
 name: CodeQL Analysis
-on: workflow_dispatch
+on:
+  push:
+    branches: ["feature/**", "develop", "main"]
+
 jobs:
   analyze:
-    name: Analyze ${{ matrix.language }}
+    name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Print Metadata
-        run: echo "${{ matrix.language }}"
+
+      - name: Get Matrix metadata
+        run: echo "${{ toJSON(matrix) }}"
+
+      - name: Initialize CodeQL
+        uses: actions/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
