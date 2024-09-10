@@ -7,6 +7,25 @@ jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
+
+    permissions:
+      
+      security-events: write
+
+      packages: read
+
+      actions: read
+
+      contents: read
+    
+    strategy:
+      fail-fast: false
+
+      matrix:
+        include:
+          - languages: python
+            build-mode: none
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
