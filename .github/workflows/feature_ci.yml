@@ -35,6 +35,9 @@ jobs:
           project_id: ${{ env.PROJECT_ID }}
           service_account_key: ${{ env.SA_KEY }}
 
+      - name: Test Gcloud
+        run: gcloud auth list
+
       # - name: Validate Authentication
       #   run: gcloud info
       # - name: Install Gcloud SDK
