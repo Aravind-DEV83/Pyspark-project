@@ -1,6 +1,8 @@
 name: Build and Test Feature
 on:
-  
+
+  workflow_dispatch:
+
   push:
     branches: ["feature/**"]
 
