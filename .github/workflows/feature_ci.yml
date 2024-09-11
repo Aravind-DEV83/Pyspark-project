@@ -39,7 +39,12 @@ jobs:
       #     service_account_key: ${{ env.SA_KEY }}
 
       - name: Test Gcloud
-        run: gcloud auth list && gsutil ls
+        run: |
+          gcloud config set account aravind.dev83@gmail.com
+          gcloud config set project adev-spark
+          gcloud auth list
+          gcloud version
+          gsutil ls
 
       # - name: Validate Authentication
       #   run: gcloud info
