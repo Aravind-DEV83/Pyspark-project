@@ -17,3 +17,9 @@ gcloud iam service-accounts add-iam-policy-binding "ci-cd-service-account@adev-s
   --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project"
 
   https://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/providers/github
+
+
+gcloud iam service-accounts add-iam-policy-binding "ci-cd-service-account@adev-spark.iam.gserviceaccount.com" \
+    --project="adev-spark" \
+    --role="roles/iam.serviceAccountTokenCreator" \
+    --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project"
