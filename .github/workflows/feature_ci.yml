@@ -27,17 +27,22 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: 'projects/878514427384/locations/global/workloadIdentityPools/githubactions/providers/github'
+          create_
           service_account: 'ci-cd-service-account@adev-spark.iam.gserviceaccount.com'
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Test Gcloud Secrets
+      - name: test
         run: |
-          gcloud secrets versions access "latest" --secret "my-secret"
+          gcloud auth list
+
+      # - name: Test Gcloud Secrets
+      #   run: |
+      #     gcloud secrets versions access "latest" --secret "my-secret"
       
-      - name: Copy Files to GCS
-        run: echo "Files Copied to the GCS bucket...."
+      # - name: Copy Files to GCS
+      #   run: echo "Files Copied to the GCS bucket...."
     
           
 

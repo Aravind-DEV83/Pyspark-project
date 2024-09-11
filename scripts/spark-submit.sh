@@ -29,5 +29,5 @@ gcloud iam service-accounts add-iam-policy-binding ci-cd-service-account@adev-sp
     --role="roles/iam.serviceAccountTokenCreator"
 
 gcloud iam service-accounts add-iam-policy-binding ci-cd-service-account@adev-spark.iam.gserviceaccount.com \
-    --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project" \
-    --role="roles/iam.serviceAccountTokenCreator"
+    --member="serviceAccount:" \
+    --role="roles/iam.workloadIdentityUser"
