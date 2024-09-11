@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: ["develop"]
 
-env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-  SA: ${{ secrets.GCP_SA }}
-  SA_KEY: ${{ secrets.GCP_SA_KEY }}
-
 jobs:
   build:
     name: Build Feature
@@ -18,34 +13,26 @@ jobs:
 
     permissions:
       contents: 'read'
-      id-token: write
+      id-token: 'write'
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
       - id: 'auth'
+        name: Authenticate to Google Cloud
         uses: 'google-github-actions/auth@v2'
         with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
-          # workload_identity_provider: 'projects/878514427384/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-          # service_account: 'dev-github-resource-access-sa@adev-spark.iam.gserviceaccount.com'
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/878514427384/locations/global/workloadIdentityPools/githubactions/providers/github'
+          service_account: 'ci-cd-service-account@adev-spark.iam.gserviceaccount.com'
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Test Gcloud
+      - name: Test Gcloud Secrets
         run: |
-          gcloud config set account aravind.dev83@gmail.com
-          gcloud config set project adev-spark
-          gcloud auth list
-          gcloud version
-          gsutil ls
-
-      # - name: Validate Authentication
-      #   run: gcloud info
-      # - name: Install Gcloud SDK
-      #   run: sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+          gcloud secrets versions access "latest" --secret "my-secret"
       
       - name: Copy Files to GCS
         run: echo "Files Copied to the GCS bucket...."
