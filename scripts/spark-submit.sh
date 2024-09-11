@@ -19,17 +19,15 @@ gcloud iam service-accounts add-iam-policy-binding "ci-cd-service-account@adev-s
   https://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/providers/github
 
 
-gcloud iam service-accounts add-iam-policy-binding "ci-cd-service-account@adev-spark.iam.gserviceaccount.com" \
-    --project="adev-spark" \
-    --role="roles/iam.serviceAccountTokenCreator" \
-    --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project"
+gcloud projects add-iam-policy-binding adev-spark \
+    --member='user:aravind.dev83@gmail.com' \
+    --role='roles/iam.serviceAccountTokenCreator' \
+    --impersonate-service-account ci-cd-service-account@adev-spark.iam.gserviceaccount.com
 
-gcloud iam service-accounts add-iam-policy-binding \
-  ci-cd-service-account@adev-spark.iam.gserviceaccount.com \
-  --member="serviceAccount:ci-cd-service-account@adev-spark.iam.gserviceaccount.com" \
-  --role="roles/iam.serviceAccountTokenCreator"
+gcloud iam service-accounts add-iam-policy-binding ci-cd-service-account@adev-spark.iam.gserviceaccount.com \
+    --member="user:aravind.dev83@gmail.com" \
+    --role="roles/iam.serviceAccountTokenCreator"
 
-gcloud iam service-accounts add-iam-policy-binding \
-  ci-cd-service-account@adev-spark.iam.gserviceaccount.com \
-  --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project" \
-  --role="roles/iam.serviceAccountTokenCreator"
+gcloud iam service-accounts add-iam-policy-binding ci-cd-service-account@adev-spark.iam.gserviceaccount.com \
+    --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project" \
+    --role="roles/iam.serviceAccountTokenCreator"
