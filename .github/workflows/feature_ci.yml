@@ -1,0 +1,43 @@
+name: Build and Test Feature
+on:
+  pull_request:
+    branches: ["develop"]
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT }}
+  SA: ${{ secrets.GCP_SA }}
+  SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+jobs:
+  build:
+    name: Build Feature
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          service_account: ${{ env.SA }}
+
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: ${{ env.SA_KEY }}
+
+      - name: Validate Authentication
+        run: gcloud info
+      # - name: Install Gcloud SDK
+      #   run: sudo apt-get update && sudo apt-get install -y google-cloud-sdk
+      
+      - name: Copy Files to GCS
+        run: echo "Files Copied to the GCS bucket...."
+    
+          
+
+
+
+
