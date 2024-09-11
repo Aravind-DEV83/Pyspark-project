@@ -16,6 +16,10 @@ jobs:
     name: Build Feature
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -23,11 +27,11 @@ jobs:
       - name: Testing secrets
         run: echo "Project - ${{ secrets.PROJECT_ID }}, SA - ${{ secrets.SA }}"
 
-      # - id: 'auth'
-      #   uses: 'google-github-actions/auth@v2'
-      #   with:
-      #     credentials_json: ${{ env.GCP_SA_KEY }}
-      #     service_account: ${{ env.SA }}
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/878514427384/locations/global/workloadIdentityPools/github-pool/providers/github-pool-provider'
+          service_account: 'ci-cd-service-account@adev-spark.iam.gserviceaccount.com'
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
@@ -36,7 +40,7 @@ jobs:
           service_account_key: ${{ env.SA_KEY }}
 
       - name: Test Gcloud
-        run: gcloud auth list
+        run: gcloud auth list && gsutil ls
 
       # - name: Validate Authentication
       #   run: gcloud info
