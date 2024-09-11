@@ -24,7 +24,7 @@ jobs:
         name: Authenticate to Google Cloud
         uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: 'projects/878514427384/locations/global/workloadIdentityPools/githubactions'
+          workload_identity_provider: 'projects/878514427384/locations/global/workloadsIdentityPools/githubactions'
           service_account: 'ci-cd-service-account@adev-spark.iam.gserviceaccount.com'
 
       - name: Setup Cloud SDK
