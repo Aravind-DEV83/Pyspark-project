@@ -34,7 +34,7 @@ jobs:
 
       - name: test
         run: |
-          gcloud auth list
+          gcloud config set account aravind.dev83@gmail.com
 
       # - name: Test Gcloud Secrets
       #   run: |
