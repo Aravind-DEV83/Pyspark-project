@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Testing secrets
-        run: echo "Project - ${{ env.PROJECT_ID }}, SA - ${{ env.SA }}"
+        run: echo "Project - ${{ secrets.PROJECT_ID }}, SA - ${{ secrets.SA }}"
 
       # - id: 'auth'
       #   uses: 'google-github-actions/auth@v2'
@@ -35,8 +35,8 @@ jobs:
       #     project_id: ${{ env.PROJECT_ID }}
       #     service_account_key: ${{ env.SA_KEY }}
 
-      - name: Validate Authentication
-        run: gcloud info
+      # - name: Validate Authentication
+      #   run: gcloud info
       # - name: Install Gcloud SDK
       #   run: sudo apt-get update && sudo apt-get install -y google-cloud-sdk
       
