@@ -27,13 +27,13 @@ jobs:
       #   uses: 'google-github-actions/auth@v2'
       #   with:
       #     credentials_json: ${{ env.GCP_SA_KEY }}
-          # service_account: ${{ env.SA }}
+      #     service_account: ${{ env.SA }}
 
-      # - name: Setup Cloud SDK
-      #   uses: google-github-actions/setup-gcloud@v2
-      #   with:
-      #     project_id: ${{ env.PROJECT_ID }}
-      #     service_account_key: ${{ env.SA_KEY }}
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          service_account_key: ${{ env.SA_KEY }}
 
       # - name: Validate Authentication
       #   run: gcloud info
