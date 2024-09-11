@@ -20,7 +20,8 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v2'
         with:
-          service_account: ${{ env.SA }}
+          credentials_json: ${{ env.GCP_SA_KEY }}
+          # service_account: ${{ env.SA }}
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
