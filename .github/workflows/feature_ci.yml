@@ -27,7 +27,6 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           workload_identity_provider: 'projects/878514427384/locations/global/workloadIdentityPools/githubactions/providers/github'
-          create_
           service_account: 'ci-cd-service-account@adev-spark.iam.gserviceaccount.com'
 
       - name: Setup Cloud SDK
