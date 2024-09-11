@@ -35,9 +35,8 @@ jobs:
 
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
-        with:
-          project_id: ${{ env.PROJECT_ID }}
-          service_account_key: ${{ env.SA_KEY }}
+      #     project_id: ${{ env.PROJECT_ID }}
+      #     service_account_key: ${{ env.SA_KEY }}
 
       - name: Test Gcloud
         run: gcloud auth list && gsutil ls
