@@ -16,8 +16,7 @@ gcloud iam service-accounts add-iam-policy-binding "ci-cd-service-account@adev-s
   --role="roles/iam.workloadIdentityUser" \
   --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project"
 
-  https://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/providers/github
-
+https://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider
 
 gcloud projects add-iam-policy-binding adev-spark \
     --member='user:aravind.dev83@gmail.com' \
@@ -28,6 +27,6 @@ gcloud iam service-accounts add-iam-policy-binding ci-cd-service-account@adev-sp
     --member="user:aravind.dev83@gmail.com" \
     --role="roles/iam.serviceAccountTokenCreator"
 
-gcloud iam service-accounts add-iam-policy-binding ci-cd-service-account@adev-spark.iam.gserviceaccount.com \
-    --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactions/attribute.repository/Aravind-DEV83/Pyspark-project" \
-    --role="roles/iam.workloadIdentityUser"
+gcloud iam service-accounts add-iam-policy-binding wkf-oidc@adev-spark.iam.gserviceaccount.com \
+    --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/attribute.repository/Aravind-DEV83/Pyspark-project" \
+   --role="roles/iam.serviceAccountTokenCreator"

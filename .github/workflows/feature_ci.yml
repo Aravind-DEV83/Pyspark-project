@@ -1,0 +1,27 @@
+name: Build and Test Feature
+on:
+  workflow_dispatch:
+
+  push: ["feature/**"]
+
+  pull_request: ["develop", "main"]
+
+
+jobs:
+  authenticate:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - id: 'auth'
+        name: Authenticate to GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider'
+          service_account: 'wkf-oidc@adev-spark.iam.gserviceaccount.com'
