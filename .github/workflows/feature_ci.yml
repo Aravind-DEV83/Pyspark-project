@@ -32,6 +32,8 @@ jobs:
 
       - name: Test 
         run: |
-          gcloud auth list
-          gcloud config set project adev-spark
+          gsutil ls
+      - name: Upload Test Files to Storage Bucket
+        run: |
+          gsutil cp -r source/dataProcessingCode/src/tests gs://pyspark-testing-adev-spark
           
