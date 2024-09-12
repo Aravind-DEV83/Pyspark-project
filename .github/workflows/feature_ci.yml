@@ -2,9 +2,11 @@ name: Build and Test Feature
 on:
   workflow_dispatch:
 
-  push: ["feature/**"]
+  push: 
+    branches: ["feature/**"]
 
-  pull_request: ["develop", "main"]
+  pull_request: 
+    branches: ["develop", "main"]
 
 jobs:
   authenticate:
