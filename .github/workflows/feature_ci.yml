@@ -26,3 +26,12 @@ jobs:
         with:
           workload_identity_provider: "projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider"
           service_account: "wkf-oidc@adev-spark.iam.gserviceaccount.com"
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: Test 
+        run: |
+          gcloud auth list
+          gcloud config set project adev-spark
+          
