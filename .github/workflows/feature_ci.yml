@@ -34,7 +34,6 @@ jobs:
 
       - name: test
         run: |
-          gcloud config set account aravind.dev83@gmail.com
           gcloud config set project adev-spark
           gsutil ls
 
