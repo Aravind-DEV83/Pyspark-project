@@ -43,4 +43,5 @@ jobs:
         with:
           path: source/dataProcessingCode/src/tests
           destination: pyspark-testing-adev-spark
+          process_gcloudignore: false
           
