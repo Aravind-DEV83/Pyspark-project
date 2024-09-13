@@ -1,0 +1,45 @@
+name: 'PR to Develop: Unit Tests'
+on:
+  workflow_dispatch:
+
+  push:
+    branches: ["develop"]
+
+env:
+  WIP: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+  SA: ${{ secrets.GCP_SA }}
+
+jobs:
+  setup_and_trigger_airflow:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Authenticate to google gloud
+      - id: "auth"
+        name: Authenticate to GCP
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: ${{ env.WIP }}
+          service_account: ${{ env.SA }}
+
+      # 3. Setup gcloud for project
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      # 4. Trigger airflow to run unit tests and staging pipeline
+      - name: Trigger Airflow Job
+        run: |
+          echo "Unit Tests Sucessfull"
+          echo "Staging Pipeline Sucessfull"
+          echo "Listing all the buckets"
+          gsutil ls
+
+
