@@ -13,10 +13,7 @@ gcloud dataproc jobs submit pyspark gs://pyspark-files-adev-spark/gcs_to_bq/job.
 
 https://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider
 
-gcloud projects add-iam-policy-binding adev-spark \
-    --member='user:aravind.dev83@gmail.com' \
-    --role='roles/iam.serviceAccountTokenCreator' \
-    --impersonate-service-account ci-cd-service-account@adev-spark.iam.gserviceaccount.com
+WIP="projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider"
 
 gcloud iam service-accounts add-iam-policy-binding wkf-oidc@adev-spark.iam.gserviceaccount.com \
     --member="principalSet://iam.googleapis.com/projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/attribute.repository/Aravind-DEV83/Pyspark-project" \
