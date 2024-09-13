@@ -9,8 +9,8 @@ on:
     branches: ["develop"]
 
 env:
-  WIP: ${{ WORKLOAD_IDENTITY_PROVIDER }}
-  SA: ${{ GCP_SA }}
+  WIP: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+  SA: ${{ secrets.GCP_SA }}
 
 jobs:
   authenticate:
