@@ -32,7 +32,6 @@ jobs:
         with:
           workload_identity_provider: ${{ env.WIP }}
           service_account: ${{ env.SA }}
-          # "projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider"
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
