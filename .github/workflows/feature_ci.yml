@@ -2,11 +2,15 @@ name: Build and Test Feature
 on:
   workflow_dispatch:
 
-  push: 
+  push:
     branches: ["feature/**"]
 
-  pull_request: 
-    branches: ["develop", "main"]
+  pull_request:
+    branches: ["develop"]
+
+env:
+  WIP: ${{ WORKLOAD_IDENTITY_PROVIDER }}
+  SA: ${{ GCP_SA }}
 
 jobs:
   authenticate:
@@ -17,23 +21,28 @@ jobs:
       contents: read
 
     steps:
+      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Authenticate to Google Cloud
       - id: "auth"
         name: Authenticate to GCP
-        uses: "google-github-actions/auth@v2"
+        uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: "projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider"
-          service_account: "wkf-oidc@adev-spark.iam.gserviceaccount.com"
+          workload_identity_provider: ${{ env.WIP }}
+          service_account: ${{ env.SA }}
+          # "projects/878514427384/locations/global/workloadIdentityPools/githubactionspool/providers/github-provider"
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
-
-      - name: Test 
-        run: |
-          gsutil ls
-      - name: Upload Test Files to Storage Bucket
-        run: |
-          gsutil cp -r source/dataProcessingCode/src/tests gs://pyspark-testing-adev-spark
+      
+      - name: Upload Unit Test Files to Cloud Storage
+        uses: 'google-github-actions/upload-cloud-storage@v2'
+        with:
+          path: source/dataProcessingCode/src/tests
+          destination: pyspark-testing-adev-spark
+      # - name: Upload Test Files to Storage Bucket
+      #   run: |
+      #     gsutil cp -r source/dataProcessingCode/src/tests gs://pyspark-testing-adev-spark
           
