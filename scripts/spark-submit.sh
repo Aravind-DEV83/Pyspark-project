@@ -1,3 +1,13 @@
+
+# 1. Submit Unit Test cases to staging dataproc cluster
+
+gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/unit/test_*.py \
+    --cluster pyspark-staging-env-cluster \
+    --region us-central1 \
+    --py-files=gs://pyspark-testing-adev-spark/tests/unit/transformations.py
+
+
+# 2. Submit a gcs to bq pyspark job to dataproc cluster
 gcloud dataproc jobs submit pyspark gs://pyspark-files-adev-spark/gcs_to_bq/job.py \
     --cluster cluster-5904 \
     --region us-central1 \

@@ -1,4 +1,4 @@
-name: 'PR to Develop: Unit Tests'
+name: 'Merged to Develop: Unit, Integration testing & Staging Pipeline'
 on:
   workflow_dispatch:
 
