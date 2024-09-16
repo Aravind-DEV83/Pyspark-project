@@ -43,18 +43,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-
-      - name: Test Gcloud
+      - name: Trigger Unit Test cases
         run: |
-          gcloud config set project adev-spark
-          gsutil ls
-
-      # - name: Trigger Unit Test cases
-      #   run: |
-      #     gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/unit/test_job.py \
-      #       --cluster pyspark-staging-env-cluster \
-      #       --region us-central1 \
-      #       --py-files=gs://pyspark-testing-adev-spark/tests/unit/transformations.py
+          gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/unit/test_job.py \
+            --cluster pyspark-staging-env-cluster \
+            --region us-central1 \
+            --py-files=gs://pyspark-testing-adev-spark/tests/unit/transformations.py
   
       # - name: Trigger Staging Pipeline Job
       #   run: |
