@@ -1,6 +1,5 @@
 
 # 1. Submit Unit Test cases to staging dataproc cluster
-
 gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/unit/test_*.py \
     --cluster pyspark-staging-env-cluster \
     --region us-central1 \
