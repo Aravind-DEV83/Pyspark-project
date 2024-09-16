@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Authenticate to Google Cloud
+      # 2. Authenticate to google Ccoud
       - id: "auth"
         name: Authenticate to GCP
         uses: 'google-github-actions/auth@v2'
@@ -44,4 +44,14 @@ jobs:
           path: source/dataProcessingCode/src/tests
           destination: pyspark-testing-adev-spark
           process_gcloudignore: false
+          gzip: false
+      
+      # 5. Upload batch jobs to the cloud storage bucket
+      - name: Upload Batch Jobs to Cloud storage
+        uses: 'google-github-actions/upload-cloud-storage@v2'
+        with:
+          path: source/dataProcessingCode/src/main/jobs/batch_jobs
+          destination: pyspark-jobs-adev-spark
+          process_gcloudignore: false
+          gzip: false
           
