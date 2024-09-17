@@ -12,3 +12,6 @@ metastore_db/
 key.json
 source/dataProcessingCode/src/main/lib/
 .DS_Store
+
+#py-files
+local.py

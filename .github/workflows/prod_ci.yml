@@ -1,21 +1,17 @@
-name: 'Merged to Develop: Unit, Integration testing & Staging Pipeline'
+name: 'Merged to Master: Unit & Integration Testing'
 on:
   workflow_dispatch:
 
-  push:
-    branches: ["develop"]
-
-env:
-  WIP: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-  SA: ${{ secrets.GCP_SA }}
+  pull_request:
+    branches: ["main"]
 
 jobs:
-  setup_gcp_submit_staging_job:
+  setup_gcp_run_tests:
     runs-on: ubuntu-latest
 
     permissions:
-      id-token: write
-      contents: read
+        id-token: write
+        contents: read
 
     steps:
       # 1. Checkout the repository
@@ -50,19 +46,3 @@ jobs:
             --region us-central1 \
             --jars=gs://spark-lib-adev-spark/gcs/gcs-connector-hadoop3-latest.jar \
             --py-files=gs://pyspark-testing-adev-spark/tests/integration/transformations.py
-
-      # 6. Submit pyspark job to Dataproc
-      - name: Submit Staging Pipeline Job
-        run: |
-          gcloud dataproc jobs submit pyspark gs://pyspark-jobs-adev-spark/batch_jobs/gcs_to_bq/job.py \
-            --cluster cluster-5904 \
-            --region us-central1 \
-            --py-files=gs://pyspark-jobs-adev-spark/batch_jobs/gcs_to_bq/transformations.py,gs://pyspark-jobs-adev-spark/batch_jobs/gcs_to_bq/constants.py \
-            --jars=gs://spark-lib-adev-spark/gcs/gcs-connector-hadoop3-latest.jar \
-            -- \
-            --input_location gs://input-source-adev-spark/uber_5.csv \
-            --project_id adev-spark \
-            --temp_bucket temp_gcs_adev-spark \
-            --output_table temp.trip_data
-
-

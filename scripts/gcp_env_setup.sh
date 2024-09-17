@@ -1,7 +1,7 @@
 #!bin/bash
 
 # Create two dataproc clusters for staging and prodiction.
-gcloud dataproc clusters create pyspark-staging-env-cluster \
+gcloud dataproc clusters create staging-env-cluster \
     --enable-component-gateway \
     --bucket pyspark-staging-adev-spark \
     --region asia-south1 \
@@ -13,7 +13,7 @@ gcloud dataproc clusters create pyspark-staging-env-cluster \
     --image-version 2.2-debian12 \
     --project adev-spark
 
-gcloud dataproc clusters create pyspark-production-env-cluster \
+gcloud dataproc clusters create prod-env-cluster \
     --enable-component-gateway \
     --bucket pyspark-staging-adev-spark \
     --region asia-south1 \
