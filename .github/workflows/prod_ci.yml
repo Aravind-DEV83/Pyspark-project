@@ -34,7 +34,7 @@ jobs:
       - name: Trigger Unit Tests
         run: |
           gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/unit/test_job.py \
-            --cluster pyspark-staging-env-cluster \
+            --cluster cluster-5904 \
             --region us-central1 \
             --py-files=gs://pyspark-testing-adev-spark/tests/unit/transformations.py
 
