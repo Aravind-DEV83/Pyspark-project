@@ -7,42 +7,42 @@ on:
 
 jobs:
   setup_gcp_run_tests:
-  runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  permissions:
-      id-token: write
-      contents: read
+    permissions:
+        id-token: write
+        contents: read
 
-  steps:
-  # 1. Checkout the repository
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+    # 1. Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-  # 2. Authenticate to google gloud
-  - id: "auth"
-    name: Authenticate to GCP
-    uses: 'google-github-actions/auth@v2'
-    with:
-      workload_identity_provider: ${{ env.WIP }}
-      service_account: ${{ env.SA }}
+    # 2. Authenticate to google gloud
+    - id: "auth"
+      name: Authenticate to GCP
+      uses: 'google-github-actions/auth@v2'
+      with:
+        workload_identity_provider: ${{ env.WIP }}
+        service_account: ${{ env.SA }}
 
-  # 3. Setup gcloud for project
-  - name: 'Set up Cloud SDK'
-    uses: 'google-github-actions/setup-gcloud@v2'
+    # 3. Setup gcloud for project
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2'
 
-  # 4. Run unit tests
-  - name: Trigger Unit Tests
-    run: |
-      gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/unit/test_job.py \
-        --cluster pyspark-staging-env-cluster \
-        --region us-central1 \
-        --py-files=gs://pyspark-testing-adev-spark/tests/unit/transformations.py
+    # 4. Run unit tests
+    - name: Trigger Unit Tests
+      run: |
+        gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/unit/test_job.py \
+          --cluster pyspark-staging-env-cluster \
+          --region us-central1 \
+          --py-files=gs://pyspark-testing-adev-spark/tests/unit/transformations.py
 
-  # 5. Run integration tests
-  - name: Run Integration Tests
-    run: |
-      gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/integration/test_job.py \
-        --cluster cluster-5904 \
-        --region us-central1 \
-        --jars=gs://spark-lib-adev-spark/gcs/gcs-connector-hadoop3-latest.jar \
-        --py-files=gs://pyspark-testing-adev-spark/tests/integration/transformations.py
+    # 5. Run integration tests
+    - name: Run Integration Tests
+      run: |
+        gcloud dataproc jobs submit pyspark gs://pyspark-testing-adev-spark/tests/integration/test_job.py \
+          --cluster cluster-5904 \
+          --region us-central1 \
+          --jars=gs://spark-lib-adev-spark/gcs/gcs-connector-hadoop3-latest.jar \
+          --py-files=gs://pyspark-testing-adev-spark/tests/integration/transformations.py
