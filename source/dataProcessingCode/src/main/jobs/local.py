@@ -3,15 +3,15 @@ import logging
 import argparse
 
 from pyspark.sql import SparkSession, DataFrame
-from transformations import convert_to_timestamp, total_ride_time, average_speed,estimated_ride_time
+from batch_jobs.gcs_to_bq.transformations import convert_to_timestamp, total_ride_time, average_speed,estimated_ride_time
 
-import constants as constants
+import batch_jobs.gcs_to_bq.constants as constants
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s:%(funcName)s:%(levelname)s:%(message)s')
 
 # Variables
-SERVICE_ACCOUNT = '/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/jobs/batch_job/key.json'
+SERVICE_ACCOUNT = '/Users/aravind_jarpala/Downloads/Pyspark/Pyspark-project/source/dataProcessingCode/src/main/jobs/batch_jobs/gcs_to_bq/key.json'
 
 def parse_args(args: Optional[Sequence[str]] = None) -> Dict[str, Any]:
     parser = argparse.ArgumentParser()
