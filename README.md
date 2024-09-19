@@ -4,7 +4,7 @@ PySpark data pipeline is a CI/CD project for PySpark applications on the GCP pla
 
 # Solution Architecture
 
-
+![alt text](files/final-ci:cd.png)
 
 
 ## Security & Access Control
@@ -12,7 +12,7 @@ PySpark data pipeline is a CI/CD project for PySpark applications on the GCP pla
 ### Service Accounts
 
 | Service Account | Permisssions                   |
-| --------------- |-------------------------------:|
+| --------------- |:-------------------------------|
 | wkf-oidc        | Workload Identity User         |
 |                 | Service Account Token Creator  | 
 |                 | Dataproc Editor                |
@@ -27,4 +27,4 @@ The GitHub action authenticates to google cloud via the `Workload Identity Feder
 
 With GitHub's introudction of OIDC tokens into GitHub action workflows, that enables the user to authenticate from GitHub actions to Google Cloud using `Workload Identity Federation`, by removing the need to long-lived service account key.
 
-[Workload Identity Federation through a Service Account][https://github.com/google-github-actions/auth?tab=readme-ov-file#workload-identity-federation-through-a-service-account]
+[Workload Identity Federation through a Service Account](https://github.com/google-github-actions/auth?tab=readme-ov-file#workload-identity-federation-through-a-service-account)
